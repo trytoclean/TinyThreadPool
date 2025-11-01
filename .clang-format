@@ -1,0 +1,62 @@
+# .clang-format
+BasedOnStyle: Google
+Language: Cpp
+
+# —— 基本缩进与宽度 —— 
+ColumnLimit: 80                # Google: 80 列
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+ContinuationIndentWidth: 4
+
+# —— 括号与大括号 —— 
+BreakBeforeBraces: Attach      # K&R 风格：函数/类/命名空间的大括号不换行
+SpaceBeforeParens: ControlStatements  # if/for/while 前有空格，函数声明/调用前无空格
+SpacesInParentheses: false
+SpaceInEmptyParentheses: false
+SpacesInSquareBrackets: false
+Cpp11BracedListStyle: true
+#where are you from
+# —— 指针与引用 —— 
+DerivePointerAlignment: false
+PointerAlignment: Right        # int* p;（Google 推荐 * 靠近类型）
+
+# —— 短语句单行策略 —— 
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty  # 仅允许空函数体单行
+
+# —— 构造器初始化列表换行 —— 
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ConstructorInitializerIndentWidth: 4
+BreakConstructorInitializers: BeforeComma
+
+# —— 对齐与空行 —— 
+AlignAfterOpenBracket: Align
+AlignOperands: true
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+KeepEmptyLinesAtTheStartOfBlocks: false
+SpacesBeforeTrailingComments: 1
+ReflowComments: true
+IndentCaseLabels: true
+NamespaceIndentation: None
+
+# —— 头文件排序（接近 Google 建议的分组）——
+SortIncludes: true
+IncludeBlocks: Regroup
+# 相关头（同名 .h）自动优先：由 IncludeIsMainRegex 控制
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+IncludeCategories:
+  # 1) C system headers（如 <stdio.h>）
+  - Regex: '^(<|")((assert|ctype|errno|float|inttypes|limits|locale|math|setjmp|signal|stdarg|stddef|stdint|stdio|stdlib|string|time|wchar|wctype)\.h)("|>)$'
+    Priority: 1
+  # 2) C++ 标准库（<...> 但排除上面的 C 头）
+  - Regex: '^<([a-z0-9_]+)(/[^>]*)?>$'
+    Priority: 2
+  # 3) 第三方库（示例：gtest/gmock 优先一个小组）
+  - Regex: '^<g(test|mock)/.*>$'
+    Priority: 3
+  # 4) 项目内头文件（"..."）
+  - Regex: '^".*"'
+    Priority: 4
